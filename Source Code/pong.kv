@@ -1,0 +1,140 @@
+<PongBall>:
+    size: 50, 50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<PongPaddle>:
+    size: 25, 200
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PongGame>:
+    ball: pong_ball
+    player1: player_left
+    player2: player_right
+
+    canvas:
+        Rectangle:
+            pos: self.center_x - 5, 0
+            size: 10, self.height
+
+    Label:
+        font_size: 70
+        center_x: root.width / 4
+        top: root.top - 50
+        text: str(root.player1.score)
+
+    Label:
+        font_size: 70
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: str(root.player2.score)
+
+    PongBall:
+        id: pong_ball
+        center: self.parent.center
+
+    PongPaddle:
+        id: player_left
+        x: root.x
+        center_y: root.center_y
+
+    PongPaddle:
+        id: player_right
+        x: root.width - self.width
+        center_y: root.center_y
+
+
+
+<Manager>:
+    id: screen_manager
+
+
+    Screen:
+        name: 'home'
+
+        Label:
+            text: "Welcome To The Pong Game"
+            font_size: 50
+
+        Button:
+            text: 'Start Game'
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            on_release: root.current = 'game';game.serve_ball()
+
+
+            # Normal
+            # size: (32, 32)
+            # size_hint: (.15, .1)
+            # pos: (450, 200)
+
+
+
+            # Full screen
+            size: (16, 16)
+            size_hint: (.15, .1)
+            pos: self.width / 2 + 600, self.height + 150
+
+        Button:
+            text: 'Guide'
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            on_release: root.current = 'guide'
+
+
+            # Normal
+            # size: (32, 32)
+            # size_hint: (.15, .1)
+            # pos: self.width + 150, 200
+
+            # Full Screen
+            size: (16, 16)
+            size_hint: (.15, .1)
+            pos: self.width + 250, self.height + 150
+
+    Screen:
+        name: 'game'
+        Button:
+            text: "<"
+            size: (.5, .5)
+            pos: root.x, root.top - self.height
+            on_release: root.current = 'home'
+
+            # Normal
+            # size_hint: (.1, .1)
+
+            # Full Screen
+            size_hint: (.075, .075)
+
+        PongGame:
+            id: game
+
+
+    Screen:
+        name: 'guide'
+
+        Label:
+            text: "This is a 2 Player Pong Game, Created By Manan.\n\nThe Game is very simple.There Are Two Players, One on Each side.\nThe Players Move their Paddles By dragging Them,\nOr By Pressing 'W' Key For Moving Up, 'S' Key For Moving Down(Player 1),\nAnd Up And Down Keys(Player 2) For Moving Up And Down Respectively.\n\nThey Have To Hit The ball.\nIf they miss the ball and it touches their side,\nThen the opposite player gets a point.\n\nThe player with the most points at the End wins!!"
+            font_size: 25
+
+        Button:
+            text: "<"
+            size: (.5, .5)
+            pos: root.x, root.top - self.height
+            on_release: root.current = 'home'
+
+            # Normal
+            # size_hint: (.1, .1)
+
+            # Full Screen
+            size_hint: (.075, .075)
+
+
+
